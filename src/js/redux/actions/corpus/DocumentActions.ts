@@ -191,7 +191,7 @@ export function uploadCorpus(files) {
             formData.append("annotationSet", annotationSets[0].name)
         }
 
-        client.httpPost(`/import`, formData, {}, false)
+        client.httpPost(`import`, formData, {}, false)
             .then(result => {
                 dispatch(receiveCorpusUpload(result))
             }
@@ -208,7 +208,7 @@ export const fetchTagsForActiveDocumentEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_TAGS_FOR_ACTIVE_DOCUMENT),
     mergeMap((action: PayloadAction<Tag>) => {
         let documentId = state$.value.activeCorpus.activeDocument.item.documentId
-        return fromFetch(RequestBuilder.GET(`/document/${documentId}/tag`)).pipe(
+        return fromFetch(RequestBuilder.GET(`document/${documentId}/tag`)).pipe(
             toJson(
                 map((res: Tag[]) => {
                     return createFetchSuccessAction<Tag[]>(RECEIVE_TAGS_FOR_ACTIVE_DOCUMENT)(res)
